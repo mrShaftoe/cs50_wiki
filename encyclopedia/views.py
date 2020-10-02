@@ -1,7 +1,7 @@
 from django.shortcuts import render
 
 from . import util
-
+import random
 
 
 def index(request):
@@ -22,3 +22,10 @@ def entry_page(request, name):
         "name": name
     })
 
+def random_page(request):
+    entries = util.list_entries()
+    random_entry = random.choice(entries)
+    return render(request, "encyclopedia/entry.html", {
+        "name": random_entry,
+        "entry": util.convert_entry(util.get_entry(random_entry))
+    })
