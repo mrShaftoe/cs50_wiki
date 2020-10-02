@@ -9,9 +9,16 @@ def index(request):
         "entries": util.list_entries()
     })
 
-def entry(request, name):
-    return render(request, "encyclopedia/entry.html", {
-        "name": name,
-        "entry": util.convert_entry(util.get_entry(name))
+def entry_page(request, name):
+    entry = util.get_entry(name)
+
+    if entry:
+        return render(request, "encyclopedia/entry.html", {
+            "name": name,
+            "entry": util.convert_entry(name)
+    })
+
+    return render(request, "encyclopedia/404.html", {
+        "name": name
     })
 
